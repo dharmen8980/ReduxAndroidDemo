@@ -99,6 +99,14 @@ fun Greeting(viewModel: LoginViewModel) {
 
         if (isLoggedIn.value) {
             Text(text = "Success", modifier = Modifier.align(CenterHorizontally))
+            val user = viewModel.loginStore.state.user
+            user.let {
+                Text(
+                    text = "${user?.firstName} ${user?.lastName} \n ${user?.email}",
+                    modifier = Modifier.align(CenterHorizontally)
+                )
+            }
+
         }
 
 

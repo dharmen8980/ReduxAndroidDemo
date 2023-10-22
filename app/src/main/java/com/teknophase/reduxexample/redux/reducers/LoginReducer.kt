@@ -8,7 +8,7 @@ import com.teknophase.reduxexample.state.LoginState
 val loginReducer : Reducer<LoginState> = reducerForActionType<LoginState,LoginActions> { state, action ->
     when(action) {
         is LoginActions.Login -> login(state)
-        is LoginActions.LoginResult -> loginresult(state)
+        is LoginActions.LoginResult -> loginresult(state,action)
         is LoginActions.UpdateUsername -> updateUsername(state,action)
         is LoginActions.UpdatePassword -> updatePassword(state,action)
     }
@@ -22,8 +22,8 @@ fun updateUsername(state: LoginState, action: LoginActions.UpdateUsername): Logi
     return state.copy(username = action.username)
 }
 
-fun loginresult(state: LoginState): LoginState {
-    return state.copy(isLoading = false, isLoggedIn = true)
+fun loginresult(state: LoginState,action: LoginActions.LoginResult): LoginState {
+    return state.copy(isLoading = false, isLoggedIn = action.isLoggedIn, user = action.user)
 }
 
 fun login(state: LoginState): LoginState {

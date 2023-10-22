@@ -35,8 +35,8 @@ fun login(
         response.let {
             if(response.isSuccessful) {
                 val user = response.body()
-                user.let {
-                    store.dispatch(LoginActions.LoginResult(true))
+                if(user!=null){
+                    store.dispatch(LoginActions.LoginResult(true,user))
                 }
             }
         }
