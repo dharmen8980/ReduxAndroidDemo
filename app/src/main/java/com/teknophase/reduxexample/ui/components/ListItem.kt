@@ -15,45 +15,53 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
-import androidx.compose.ui.unit.dp
-import androidx.compose.ui.unit.sp
 import coil.compose.AsyncImage
 import com.teknophase.reduxexample.model.ListItemModel
+import com.teknophase.reduxexample.ui.constants.font_12
+import com.teknophase.reduxexample.ui.constants.font_14
+import com.teknophase.reduxexample.ui.constants.size_10
+import com.teknophase.reduxexample.ui.constants.size_5
+import com.teknophase.reduxexample.ui.constants.size_70
+import com.teknophase.reduxexample.ui.constants.size_80
 
 @Composable
-fun ListItem(photoModel : ListItemModel) {
+fun ListItem(photoModel: ListItemModel) {
     Row(
-       modifier = Modifier
-           .fillMaxWidth()
-           .height(80.dp)
-           .background(Color.White)
+        modifier = Modifier
+            .fillMaxWidth()
+            .height(size_80)
+            .background(Color.White)
     ) {
         AsyncImage(
             model = photoModel.url,
             modifier = Modifier
-                .size(width = 80.dp, height = 70.dp)
+                .size(width = size_80, height = size_70)
                 .align(CenterVertically)
-                .padding(horizontal = 5.dp),
+                .padding(horizontal = size_5),
             contentDescription = ""
         )
 
-        Column(modifier = Modifier.fillMaxSize().padding(5.dp)) {
+        Column(
+            modifier = Modifier
+                .fillMaxSize()
+                .padding(size_5)
+        ) {
             Text(
                 text = photoModel.title,
-                modifier = Modifier.padding(top = 10.dp),
+                modifier = Modifier.padding(top = size_10),
                 color = Color.Black,
                 style = TextStyle(
                     fontWeight = FontWeight.Bold,
-                    fontSize = 14.sp
+                    fontSize = font_14
                 )
             )
 
             Text(
                 text = photoModel.thumbnailUrl,
-                modifier = Modifier.padding(top = 10.dp),
+                modifier = Modifier.padding(top = size_10),
                 color = Color.Black,
                 style = TextStyle(
-                    fontSize = 12.sp
+                    fontSize = font_12
                 )
             )
         }

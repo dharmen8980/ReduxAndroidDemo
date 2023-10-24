@@ -14,16 +14,18 @@ import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Alignment.Companion.CenterHorizontally
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.tooling.preview.Preview
-import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
 import androidx.navigation.compose.rememberNavController
 import com.teknophase.redux.map
+import com.teknophase.reduxexample.R
 import com.teknophase.reduxexample.model.AuthRequestModel
 import com.teknophase.reduxexample.navigation.AppNavRoutes
 import com.teknophase.reduxexample.state.LoginActions
+import com.teknophase.reduxexample.ui.constants.size_20
 import com.teknophase.reduxexample.ui.theme.ReduxExampleTheme
 import com.teknophase.reduxexample.viewmodel.LoginViewModel
 
@@ -56,26 +58,26 @@ fun LoginScreen(
         TextField(
             value = username.value,
             placeholder = {
-                Text(text = "Username")
+                Text(text = stringResource(R.string.username))
             },
             onValueChange = { updatedUsername ->
                 viewModel.loginStore.dispatch(LoginActions.UpdateUsername(updatedUsername))
             },
             modifier = Modifier
-                .padding(vertical = 20.dp)
+                .padding(vertical = size_20)
                 .align(CenterHorizontally)
         )
 
         TextField(
             value = password.value,
             placeholder = {
-                Text(text = "Password")
+                Text(text = stringResource(R.string.password))
             },
             onValueChange = { updatedPassword ->
                 viewModel.loginStore.dispatch(LoginActions.UpdatePassword(updatedPassword))
             },
             modifier = Modifier
-                .padding(vertical = 20.dp)
+                .padding(vertical = size_20)
                 .align(CenterHorizontally),
             visualTransformation = PasswordVisualTransformation()
         )
@@ -94,7 +96,7 @@ fun LoginScreen(
                 },
                 modifier = Modifier.align(CenterHorizontally)
             ) {
-                Text(text = "Login")
+                Text(text = stringResource(R.string.login))
             }
         } else {
             CircularProgressIndicator(modifier = Modifier.align(CenterHorizontally))
@@ -103,7 +105,6 @@ fun LoginScreen(
         if (isLoggedIn.value) {
             navController.navigate(AppNavRoutes.HOME.name)
         }
-
 
     }
 }

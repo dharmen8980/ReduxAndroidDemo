@@ -1,8 +1,6 @@
 package com.teknophase.reduxexample.ui.screens
 
-import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
-import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.material3.CircularProgressIndicator
@@ -20,8 +18,10 @@ import com.teknophase.reduxexample.viewmodel.HomeViewModel
 
 @Composable
 fun HomeScreen(viewModel: HomeViewModel = hiltViewModel()) {
-    Column(modifier = Modifier.fillMaxSize(),
-    verticalArrangement = Arrangement.Center) {
+    Box(
+        modifier = Modifier
+            .fillMaxSize()
+    ) {
         val coroutineScope = rememberCoroutineScope()
         val error = viewModel.store.stateFlow.map(coroutineScope) {
             it.isError
@@ -33,14 +33,14 @@ fun HomeScreen(viewModel: HomeViewModel = hiltViewModel()) {
             it.photos
         }.collectAsState()
 
-        if(isLoading.value) {
+        if (isLoading.value) {
             Box(modifier = Modifier.fillMaxSize()) {
                 CircularProgressIndicator(
                     modifier = Modifier.align(Center)
                 )
             }
         } else {
-            if(error.value){
+            if (error.value) {
                 Box(modifier = Modifier.fillMaxSize()) {
                     Text(
                         text = "Error",
@@ -49,8 +49,8 @@ fun HomeScreen(viewModel: HomeViewModel = hiltViewModel()) {
                 }
             }
 
-            LazyColumn {
-                items(photos.value.size) {index ->
+            LazyColumn(modifier = Modifier.fillMaxSize()) {
+                items(photos.value.size) { index ->
                     ListItem(photos.value.get(index))
                     Divider()
                 }
