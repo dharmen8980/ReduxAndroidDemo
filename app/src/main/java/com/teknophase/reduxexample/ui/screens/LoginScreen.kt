@@ -2,7 +2,6 @@ package com.teknophase.reduxexample.ui.screens
 
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.Button
@@ -13,30 +12,28 @@ import androidx.compose.material3.TextField
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.rememberCoroutineScope
-import androidx.compose.ui.Alignment
 import androidx.compose.ui.Alignment.Companion.CenterHorizontally
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.input.PasswordVisualTransformation
-import androidx.compose.ui.text.input.VisualTransformation
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import com.teknophase.redux.Middleware
+import androidx.hilt.navigation.compose.hiltViewModel
+import androidx.navigation.NavController
+import androidx.navigation.compose.rememberNavController
 import com.teknophase.redux.map
 import com.teknophase.reduxexample.model.AuthRequestModel
+import com.teknophase.reduxexample.navigation.AppNavRoutes
 import com.teknophase.reduxexample.state.LoginActions
-import com.teknophase.reduxexample.state.LoginEnvironment
-import com.teknophase.reduxexample.state.LoginState
 import com.teknophase.reduxexample.ui.theme.ReduxExampleTheme
 import com.teknophase.reduxexample.viewmodel.LoginViewModel
-import kotlinx.coroutines.CoroutineDispatcher
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Dispatchers
 
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun Greeting(viewModel: LoginViewModel) {
+fun LoginScreen(
+    viewModel: LoginViewModel = hiltViewModel(),
+    navController: NavController
+) {
     val coroutineScope = rememberCoroutineScope()
     val username = viewModel.loginStore.stateFlow.map(coroutineScope) {
         it.username
@@ -58,6 +55,9 @@ fun Greeting(viewModel: LoginViewModel) {
 
         TextField(
             value = username.value,
+            placeholder = {
+                Text(text = "Username")
+            },
             onValueChange = { updatedUsername ->
                 viewModel.loginStore.dispatch(LoginActions.UpdateUsername(updatedUsername))
             },
@@ -68,6 +68,9 @@ fun Greeting(viewModel: LoginViewModel) {
 
         TextField(
             value = password.value,
+            placeholder = {
+                Text(text = "Password")
+            },
             onValueChange = { updatedPassword ->
                 viewModel.loginStore.dispatch(LoginActions.UpdatePassword(updatedPassword))
             },
@@ -98,15 +101,7 @@ fun Greeting(viewModel: LoginViewModel) {
         }
 
         if (isLoggedIn.value) {
-            Text(text = "Success", modifier = Modifier.align(CenterHorizontally))
-            val user = viewModel.loginStore.state.user
-            user.let {
-                Text(
-                    text = "${user?.firstName} ${user?.lastName} \n ${user?.email}",
-                    modifier = Modifier.align(CenterHorizontally)
-                )
-            }
-
+            navController.navigate(AppNavRoutes.HOME.name)
         }
 
 
@@ -117,21 +112,6 @@ fun Greeting(viewModel: LoginViewModel) {
 @Composable
 fun GreetingPreview() {
     ReduxExampleTheme {
-        Greeting(viewModel = LoginViewModel(
-            loginEnvironment = object : LoginEnvironment {
-                override val initialState: LoginState
-                    get() = LoginState()
-                override val globalMiddleware: List<Middleware<Any>>
-                    get() = emptyList()
-                override val dispatcher: CoroutineDispatcher
-                    get() = Dispatchers.IO
-
-                override fun getMiddleware(coroutineScope: CoroutineScope): List<Middleware<Any>> {
-                    return globalMiddleware
-                }
-
-            }
-        )
-        )
+        LoginScreen(navController = rememberNavController())
     }
 }
