@@ -10,6 +10,7 @@ import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import com.teknophase.reduxexample.ui.screens.HomeScreen
 import com.teknophase.reduxexample.ui.screens.LoginScreen
+import com.teknophase.reduxexample.ui.screens.MapScreen
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -20,7 +21,7 @@ fun AppNavHost() {
 
         NavHost(
             navController = navController,
-            startDestination = AppNavRoutes.LOGIN.name,
+            startDestination = AppNavRoutes.MAP.name,
             modifier = Modifier.padding(innerPadding)
         ) {
 
@@ -32,6 +33,10 @@ fun AppNavHost() {
 
             composable(route = AppNavRoutes.HOME.name) {
                 HomeScreen()
+            }
+
+            composable(route = AppNavRoutes.MAP.name) {
+                MapScreen()
             }
 
         }

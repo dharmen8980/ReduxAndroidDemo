@@ -7,12 +7,12 @@ plugins {
 
 android {
     namespace 'com.teknophase.reduxexample'
-    compileSdk 33
+    compileSdk 34
 
     defaultConfig {
         applicationId "com.teknophase.reduxexample"
         minSdk 24
-        targetSdk 33
+        targetSdk 34
         versionCode 1
         versionName "1.0"
 
@@ -79,6 +79,9 @@ dependencies {
     implementation("io.coil-kt:coil-compose:2.4.0")
 
     implementation(project(":redux"))
+
+    //google map dependency
+    implementation("com.google.android.libraries.maps:maps:3.1.0-beta")
 }
 
 // Allow references to generated code
